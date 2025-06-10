@@ -59,7 +59,7 @@
             @endif
         </div>
 
-        <!-- Columna principal -->
+        <!-- Columna principal -- GRAFICAS -- -->
         <div class="col-lg-9 col-md-8">
             <div class="row g-3 mb-4">
                 <div class="col-md-6">
@@ -83,208 +83,208 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <hr class="my-4">
+        <hr class="my-4">
 
-            @if(!$planEntrenamiento || !$planEntrenamiento->iniciado)
-                <div class="alert alert-info text-center shadow-sm">
-                    @if(auth()->user()->planes_completados >= 2)
-                        Has completado dos planes de entrenamiento. Es hora de realizar una nueva evaluación.
-                        <a href="{{ route('evaluaciones.create') }}" class="btn btn-primary ms-2">Realizar Evaluación</a>
-                    @elseif($evaluaciones->count() > 0)
-                        <form method="POST" action="{{ route('planEntrenamiento.generar') }}" class="d-inline">
-                            @csrf
-                            <button class="btn btn-success">Comienza a Entrenar</button>
-                        </form>
-                    @else
-                        Debes realizar una evaluación primero para comenzar un entrenamiento.
-                    @endif
-                </div>
-            @endif
+        @if(!$planEntrenamiento || !$planEntrenamiento->iniciado)
+            <div class="alert alert-info text-center shadow-sm">
+                @if(auth()->user()->planes_completados >= 2)
+                    Has completado dos planes de entrenamiento. Es hora de realizar una nueva evaluación.
+                    <a href="{{ route('evaluaciones.create') }}" class="btn btn-primary ms-2">Realizar Evaluación</a>
+                @elseif($evaluaciones->count() > 0)
+                    <form method="POST" action="{{ route('planEntrenamiento.generar') }}" class="d-inline">
+                        @csrf
+                        <button class="btn btn-success">Comienza a Entrenar</button>
+                    </form>
+                @else
+                    Debes realizar una evaluación primero para comenzar un entrenamiento.
+                @endif
+            </div>
+        @endif
 
-            @if($planEntrenamiento && $planEntrenamiento->iniciado)
-                <div class="card shadow rounded-4 mb-4">
-                    <div class="card-header bg-gradient bg-primary text-white d-flex align-items-center justify-content-between">
-                        <div class="flex-grow-1 d-flex justify-content-start">
-                            @if($dia > 1)
-                                <a href="{{ route('dashboard', ['dia' => (int)$dia - 1]) }}" class="btn btn-sm btn-outline-light">&larr;</a>
-                            @endif
-                        </div>
-                        <div class="flex-grow-2 text-center">
-                            <h5 class="mb-0">
-                                Entrenamiento - Día {{ $dia }} / 12
-                                <span class="badge bg-light text-dark ms-2">{{ $tipoEntrenamiento }}</span>
-                            </h5>
-                        </div>
-                        <div class="flex-grow-1 d-flex justify-content-end">
-                            @if($dia < 12)
-                                <a href="{{ route('dashboard', ['dia' => (int)$dia + 1]) }}" class="btn btn-sm btn-outline-light">&rarr;</a>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="card-body p-4">
-                        @if($nivel)
-                            {{-- Calentamiento --}}
-                            <h4 class="mb-3"><i class="fas fa-fire text-warning me-2"></i>Calentamiento</h4>
-                            <div class="table-responsive mb-4">
-                                <table class="table table-bordered table-hover table-striped align-middle shadow-sm">
-                                    <thead class="table-warning">
-                                        <tr>
-                                            <th style="text-align:left;">Ejercicio</th>
-                                            <th>Series</th>
-                                            <th>Repeticiones</th>
-                                            <th>Duración</th>
-                                            <th>Completado</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($calentamientos as $calentamiento)
-                                            <tr class="{{ $calentamiento->completado ? 'table-success' : '' }}">
-                                                <td style="text-align:left; cursor:pointer;" onclick="verDescripcion('{{ $calentamiento->ejercicio->nombre }}', '{{ $calentamiento->ejercicio->descripcion }}')">
-                                                    <i class="fas fa-fire text-warning me-2"></i> {{ $calentamiento->ejercicio->nombre }}
-                                                </td>
-                                                <td>
-                                                    @if($calentamiento->ejercicio->series)
-                                                        <span class="badge bg-primary">{{ $calentamiento->ejercicio->series }}</span>
-                                                    @else
-                                                        <span class="badge bg-secondary">-</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($calentamiento->ejercicio->repeticiones)
-                                                        <span class="badge bg-primary">{{ $calentamiento->ejercicio->repeticiones }}</span>
-                                                    @else
-                                                        <span class="badge bg-secondary">-</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($calentamiento->ejercicio->duracion)
-                                                        <span class="badge bg-info">{{ $calentamiento->ejercicio->id < 4 ? $calentamiento->ejercicio->duracion . ' Min.' : $calentamiento->ejercicio->duracion . ' Seg.' }}</span>
-                                                    @else
-                                                        <span class="badge bg-secondary">-</span>
-                                                    @endif
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <input type="checkbox" class="form-check-input checkbox-dia m-0" style="transform: scale(1.2); vertical-align: middle;" onchange="completadoEjercicio(this, {{ $calentamiento->ejercicio->id }}, {{ $dia }}, {{ $planEntrenamiento->id }})" {{ $calentamiento->completado ? 'checked' : '' }}>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            {{-- Entrenamiento --}}
-                            <h4 class="mb-3"><i class="fas fa-dumbbell text-primary me-2"></i>Entrenamiento</h4>
-                            <div class="table-responsive mb-4">
-                                <table class="table table-bordered table-hover table-striped align-middle shadow-sm">
-                                    <thead class="table-primary">
-                                        <tr>
-                                            <th style="text-align:left;">Ejercicio</th>
-                                            <th>Series</th>
-                                            <th>Repeticiones</th>
-                                            <th>Duración</th>
-                                            <th>Completado</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($ejercicios as $ejercicio)
-                                            <tr class="{{ $ejercicio->completado ? 'table-success' : '' }}">
-                                                <td style="text-align:left; cursor:pointer;" onclick="verDescripcion('{{ $ejercicio->ejercicio->nombre }}', '{{ $ejercicio->ejercicio->descripcion }}')">
-                                                    <i class="fas fa-dumbbell text-primary me-2"></i> {{ $ejercicio->ejercicio->nombre }}
-                                                </td>
-                                                <td>
-                                                    @if($ejercicio->ejercicio->series)
-                                                        <span class="badge bg-primary">{{ $ejercicio->ejercicio->series }}</span>
-                                                    @else
-                                                        <span class="badge bg-secondary">-</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($ejercicio->ejercicio->repeticiones)
-                                                        <span class="badge bg-primary">{{ $ejercicio->ejercicio->repeticiones }}</span>
-                                                    @else
-                                                        <span class="badge bg-secondary">-</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($ejercicio->ejercicio->duracion)
-                                                        <span class="badge bg-info">{{ $ejercicio->ejercicio->id <= 4 ? $ejercicio->ejercicio->duracion . ' Min.' : $ejercicio->ejercicio->duracion . ' Seg.' }}</span>
-                                                    @else
-                                                        <span class="badge bg-secondary">-</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <input type="checkbox" class="form-check-input checkbox-dia m-0" style="transform: scale(1.2);" onchange="completadoEjercicio(this, {{ $calentamiento->ejercicio->id }}, {{ $dia }}, {{ $planEntrenamiento->id }})" {{ $calentamiento->completado ? 'checked' : '' }}>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            {{-- Estiramientos --}}
-                            <h4 class="mb-3"><i class="fas fa-child text-success me-2"></i>Estiramientos</h4>
-                            <div class="table-responsive mb-4">
-                                <table class="table table-bordered table-hover table-striped align-middle shadow-sm">
-                                    <thead class="table-success">
-                                        <tr>
-                                            <th style="text-align:left;">Ejercicio</th>
-                                            <th>Series</th>
-                                            <th>Repeticiones</th>
-                                            <th>Duración</th>
-                                            <th>Completado</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($estiramientos as $estiramiento)
-                                            <tr class="{{ $estiramiento->completado ? 'table-success' : '' }}">
-                                                <td style="text-align:left; cursor:pointer;" onclick="verDescripcion('{{ $estiramiento->ejercicio->nombre }}', '{{ $estiramiento->ejercicio->descripcion }}')">
-                                                    <i class="fas fa-child text-success me-2"></i> {{ $estiramiento->ejercicio->nombre }}
-                                                </td>
-                                                <td>
-                                                    @if($estiramiento->ejercicio->series)
-                                                        <span class="badge bg-primary">{{ $estiramiento->ejercicio->series }}</span>
-                                                    @else
-                                                        <span class="badge bg-secondary">-</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($estiramiento->ejercicio->repeticiones)
-                                                        <span class="badge bg-primary">{{ $estiramiento->ejercicio->repeticiones }}</span>
-                                                    @else
-                                                        <span class="badge bg-secondary">-</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($estiramiento->ejercicio->duracion)
-                                                        <span class="badge bg-info">{{ $estiramiento->ejercicio->duracion }} Seg.</span>
-                                                    @else
-                                                        <span class="badge bg-secondary">-</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <input type="checkbox" class="form-check-input checkbox-dia m-0" style="transform: scale(1.2);" onchange="completadoEjercicio(this, {{ $calentamiento->ejercicio->id }}, {{ $dia }}, {{ $planEntrenamiento->id }})" {{ $calentamiento->completado ? 'checked' : '' }}>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div id="completarDiaContenedor" style="display: none; text-align: center; margin-top: 30px;">
-                                <button class="btn btn-success btn-lg shadow rounded-pill px-5 py-2" style="font-size: 1.2rem;" onclick="completarDia()">
-                                    <i class="fas fa-check-circle me-2"></i>Completar Día
-                                </button>
-                            </div>
-                        @else
-                            <p class="text-center">No has iniciado un plan de entrenamiento aún.</p>
+        @if($planEntrenamiento && $planEntrenamiento->iniciado)
+            <div class="card shadow rounded-4 mb-4 w-100">
+                <div class="card-header bg-gradient bg-primary text-white d-flex align-items-center justify-content-between">
+                    <div class="flex-grow-1 d-flex justify-content-start">
+                        @if($dia > 1)
+                            <a href="{{ route('dashboard', ['dia' => (int)$dia - 1]) }}" class="btn btn-sm btn-outline-light">&larr;</a>
                         @endif
                     </div>
-                    <div class="progress" style="height: 30px; margin-bottom: 20px; border-radius: 20px;">
-                        <div id="progressBar" class="progress-bar bg-gradient bg-success" role="progressbar" style="width: {{ $progreso }}%; font-size: 1.1rem; border-radius: 20px;" aria-valuenow="{{ $progreso }}" aria-valuemin="0" aria-valuemax="100">
-                            Día {{ count($planEntrenamiento->dias_completados ?? []) }} de 12
-                        </div>
+                    <div class="flex-grow-2 text-center">
+                        <h5 class="mb-0">
+                            Entrenamiento - Día {{ $dia }} / 12
+                            <span class="badge bg-light text-dark ms-2">{{ $tipoEntrenamiento }}</span>
+                        </h5>
+                    </div>
+                    <div class="flex-grow-1 d-flex justify-content-end">
+                        @if($dia < 12)
+                            <a href="{{ route('dashboard', ['dia' => (int)$dia + 1]) }}" class="btn btn-sm btn-outline-light">&rarr;</a>
+                        @endif
                     </div>
                 </div>
-            @endif
-        </div>
+                <div class="card-body p-4">
+                    @if($nivel)
+                        {{-- Calentamiento --}}
+                        <h4 class="mb-3"><i class="fas fa-fire text-warning me-2"></i>Calentamiento</h4>
+                        <div class="table-responsive mb-4">
+                            <table class="table table-bordered table-hover table-striped align-middle shadow-sm">
+                                <thead class="table-warning">
+                                    <tr>
+                                        <th style="text-align:left;">Ejercicio</th>
+                                        <th>Series</th>
+                                        <th>Repeticiones</th>
+                                        <th>Duración</th>
+                                        <th>Completado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($calentamientos as $calentamiento)
+                                        <tr class="{{ $calentamiento->completado ? 'table-success' : '' }}">
+                                            <td style="text-align:left; cursor:pointer;" onclick="verDescripcion('{{ $calentamiento->ejercicio->nombre }}', '{{ $calentamiento->ejercicio->descripcion }}')">
+                                                <i class="fas fa-fire text-warning me-2"></i> {{ $calentamiento->ejercicio->nombre }}
+                                            </td>
+                                            <td>
+                                                @if($calentamiento->ejercicio->series)
+                                                    <span class="badge bg-primary">{{ $calentamiento->ejercicio->series }}</span>
+                                                @else
+                                                    <span class="badge bg-secondary">-</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($calentamiento->ejercicio->repeticiones)
+                                                    <span class="badge bg-primary">{{ $calentamiento->ejercicio->repeticiones }}</span>
+                                                @else
+                                                    <span class="badge bg-secondary">-</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($calentamiento->ejercicio->duracion)
+                                                    <span class="badge bg-info">{{ $calentamiento->ejercicio->id < 4 ? $calentamiento->ejercicio->duracion . ' Min.' : $calentamiento->ejercicio->duracion . ' Seg.' }}</span>
+                                                @else
+                                                    <span class="badge bg-secondary">-</span>
+                                                @endif
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <input type="checkbox" class="form-check-input checkbox-dia m-0" style="transform: scale(1.2); vertical-align: middle;" onchange="completadoEjercicio(this, {{ $calentamiento->ejercicio->id }}, {{ $dia }}, {{ $planEntrenamiento->id }})" {{ $calentamiento->completado ? 'checked' : '' }}>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        {{-- Entrenamiento --}}
+                        <h4 class="mb-3"><i class="fas fa-dumbbell text-primary me-2"></i>Entrenamiento</h4>
+                        <div class="table-responsive mb-4">
+                            <table class="table table-bordered table-hover table-striped align-middle shadow-sm">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th style="text-align:left;">Ejercicio</th>
+                                        <th>Series</th>
+                                        <th>Repeticiones</th>
+                                        <th>Duración</th>
+                                        <th>Completado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($ejercicios as $ejercicio)
+                                        <tr class="{{ $ejercicio->completado ? 'table-success' : '' }}">
+                                            <td style="text-align:left; cursor:pointer;" onclick="verDescripcion('{{ $ejercicio->ejercicio->nombre }}', '{{ $ejercicio->ejercicio->descripcion }}')">
+                                                <i class="fas fa-dumbbell text-primary me-2"></i> {{ $ejercicio->ejercicio->nombre }}
+                                            </td>
+                                            <td>
+                                                @if($ejercicio->ejercicio->series)
+                                                    <span class="badge bg-primary">{{ $ejercicio->ejercicio->series }}</span>
+                                                @else
+                                                    <span class="badge bg-secondary">-</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($ejercicio->ejercicio->repeticiones)
+                                                    <span class="badge bg-primary">{{ $ejercicio->ejercicio->repeticiones }}</span>
+                                                @else
+                                                    <span class="badge bg-secondary">-</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($ejercicio->ejercicio->duracion)
+                                                    <span class="badge bg-info">{{ $ejercicio->ejercicio->id <= 4 ? $ejercicio->ejercicio->duracion . ' Min.' : $ejercicio->ejercicio->duracion . ' Seg.' }}</span>
+                                                @else
+                                                    <span class="badge bg-secondary">-</span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <input type="checkbox" class="form-check-input checkbox-dia m-0" style="transform: scale(1.2);" onchange="completadoEjercicio(this, {{ $calentamiento->ejercicio->id }}, {{ $dia }}, {{ $planEntrenamiento->id }})" {{ $calentamiento->completado ? 'checked' : '' }}>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        {{-- Estiramientos --}}
+                        <h4 class="mb-3"><i class="fas fa-child text-success me-2"></i>Estiramientos</h4>
+                        <div class="table-responsive mb-4">
+                            <table class="table table-bordered table-hover table-striped align-middle shadow-sm">
+                                <thead class="table-success">
+                                    <tr>
+                                        <th style="text-align:left;">Ejercicio</th>
+                                        <th>Series</th>
+                                        <th>Repeticiones</th>
+                                        <th>Duración</th>
+                                        <th>Completado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($estiramientos as $estiramiento)
+                                        <tr class="{{ $estiramiento->completado ? 'table-success' : '' }}">
+                                            <td style="text-align:left; cursor:pointer;" onclick="verDescripcion('{{ $estiramiento->ejercicio->nombre }}', '{{ $estiramiento->ejercicio->descripcion }}')">
+                                                <i class="fas fa-child text-success me-2"></i> {{ $estiramiento->ejercicio->nombre }}
+                                            </td>
+                                            <td>
+                                                @if($estiramiento->ejercicio->series)
+                                                    <span class="badge bg-primary">{{ $estiramiento->ejercicio->series }}</span>
+                                                @else
+                                                    <span class="badge bg-secondary">-</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($estiramiento->ejercicio->repeticiones)
+                                                    <span class="badge bg-primary">{{ $estiramiento->ejercicio->repeticiones }}</span>
+                                                @else
+                                                    <span class="badge bg-secondary">-</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($estiramiento->ejercicio->duracion)
+                                                    <span class="badge bg-info">{{ $estiramiento->ejercicio->duracion }} Seg.</span>
+                                                @else
+                                                    <span class="badge bg-secondary">-</span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <input type="checkbox" class="form-check-input checkbox-dia m-0" style="transform: scale(1.2);" onchange="completadoEjercicio(this, {{ $calentamiento->ejercicio->id }}, {{ $dia }}, {{ $planEntrenamiento->id }})" {{ $calentamiento->completado ? 'checked' : '' }}>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="completarDiaContenedor" style="display: none; text-align: center; margin-top: 30px;">
+                            <button class="btn btn-success btn-lg shadow rounded-pill px-5 py-2" style="font-size: 1.2rem;" onclick="completarDia()">
+                                <i class="fas fa-check-circle me-2"></i>Completar Día
+                            </button>
+                        </div>
+                    @else
+                        <p class="text-center">No has iniciado un plan de entrenamiento aún.</p>
+                    @endif
+                </div>
+                <div class="progress" style="height: 30px; margin-bottom: 20px; border-radius: 20px;">
+                    <div id="progressBar" class="progress-bar bg-gradient bg-success" role="progressbar" style="width: {{ $progreso }}%; font-size: 1.1rem; border-radius: 20px;" aria-valuenow="{{ $progreso }}" aria-valuemin="0" aria-valuemax="100">
+                        Día {{ count($planEntrenamiento->dias_completados ?? []) }} de 12
+                    </div>
+                </div>
+            </div>
+        @endif        
     </div>
 
     <!-- Footer -->
@@ -296,16 +296,13 @@
 <div class="modal fade" id="modalEjercicios" tabindex="-1" aria-labelledby="etiquetaModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="etiquetaModal">Descripción</h5>
+            <div class="modal-header" style="background: rgb(40, 113, 173)">
+                <h5 class="modal-title" id="etiquetaModal"><p id="nombreEjercicio"></p></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
-                <p id="nombreEjercicio"></p>
                 <p id="descripcionEjercicio">Cargando...</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background: rgb(40, 113, 173)">Cerrar</button>
             </div>
         </div>
     </div>
@@ -456,15 +453,40 @@
                     }]
                 },
                 options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    // Mostrar el grado correspondiente en lugar del índice
+                                    const value = context.raw; // Valor del índice
+                                    return `${ejeY[value]}`; // Mostrar el grado
+                                }
+                            }
+                        },
+                        datalabels: {
+                            formatter: function (value, context) {
+                                return ejeY[value]; // Mostrar el nivel correspondiente
+                            }
+                        }
+                    },
                     scales: {
                         y: {
                             ticks: {
-                                callback: function(value) {
-                                    return value;
+                                callback: function (value, index, values) {
+                                    return ejeY[value]; // Mostrar el nivel correspondiente en el eje Y
                                 }
                             },
-                            suggestedMin: Math.min(...ejeY.map(Number)),
-                            suggestedMax: Math.max(...ejeY.map(Number))
+                            min: 0, // Índice mínimo
+                            max: ejeY.length - 1, // Índice máximo
+                            title: {
+                                display: true,
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                            }
                         }
                     }
                 }
@@ -488,16 +510,40 @@
                     }]
                 },
                 options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    // Mostrar el grado correspondiente en lugar del índice
+                                    const value = context.raw; // Valor del índice
+                                    return `${ejeY[value]}`; // Mostrar el grado
+                                }
+                            }
+                        },
+                        datalabels: {
+                            formatter: function (value, context) {
+                                return ejeY[value]; // Mostrar el nivel correspondiente
+                            }
+                        }
+                    },
                     scales: {
                         y: {
-                            reverse: true,
                             ticks: {
-                                callback: function(value) {
-                                    return value;
+                                callback: function (value, index, values) {
+                                    return ejeY[value]; // Mostrar el nivel correspondiente en el eje Y
                                 }
                             },
-                            suggestedMin: Math.min(...ejeY.map(Number)),
-                            suggestedMax: Math.max(...ejeY.map(Number))
+                            min: 0, // Índice mínimo
+                            max: ejeY.length - 1, // Índice máximo
+                            title: {
+                                display: true,
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                            }
                         }
                     }
                 }
@@ -523,7 +569,7 @@
                     id: 'dominadas',
                     datos: @json($dominadas),
                     fechas: @json($fechasEvaluaciones),
-                    ejeY: Array.from({ length: 51 }, (_, i) => i.toString()),
+                    ejeY: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50'],
                     etiqueta: 'Dominadas al Fallo',
                     invertido: false,
                     tipo: 'line',
@@ -533,7 +579,7 @@
                     id: 'flexiones',
                     datos: @json($flexiones),
                     fechas: @json($fechasEvaluaciones),
-                    ejeY: Array.from({ length: 51 }, (_, i) => i.toString()),
+                    ejeY: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50'],
                     etiqueta: 'Flexiones al Fallo',
                     invertido: false,
                     tipo: 'bar',
@@ -552,10 +598,30 @@
             ];
 
             configuracionesGraficos.forEach(configuracion => {
+                let datosGraficos = configuracion.datos;
+                if (configuracion.id === 'regleta') {
+                    datosGraficos = configuracion.datos.map(valor => configuracion.ejeY.indexOf(valor.toString()));
+                }
                 if (configuracion.invertido) {
-                    crearGraficaEjeYInvertido(configuracion.id, configuracion.fechas, configuracion.datos, configuracion.ejeY, configuracion.etiqueta, configuracion.tipo, configuracion.color);
+                    crearGraficaEjeYInvertido(
+                        configuracion.id,
+                        configuracion.fechas,
+                        datosGraficos, // <--- ¡Aquí el cambio!
+                        configuracion.ejeY,
+                        configuracion.etiqueta,
+                        configuracion.tipo,
+                        configuracion.color
+                    );
                 } else {
-                    crearGrafica(configuracion.id, configuracion.fechas, configuracion.datos, configuracion.ejeY, configuracion.etiqueta, configuracion.tipo, configuracion.color);
+                    crearGrafica(
+                        configuracion.id,
+                        configuracion.fechas,
+                        datosGraficos,
+                        configuracion.ejeY,
+                        configuracion.etiqueta,
+                        configuracion.tipo,
+                        configuracion.color
+                    );
                 }
             });
         });
