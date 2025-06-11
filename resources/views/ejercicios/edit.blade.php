@@ -79,7 +79,58 @@
 
 @section('css')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        body {
+            background: linear-gradient(120deg, #308bb4 0%, #1e3c72 100%) !important;
+            min-height: 100vh;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+        form {
+            width: 100%;
+            max-width: 500px;
+            background-color: rgba(0,0,0,0.65);
+            color: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            padding: 2rem 2rem 1rem 2rem;
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            animation: fadeInUp 1s ease forwards;
+            animation-fill-mode: forwards;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        label {
+            color: #fff;
+            font-weight: 500;
+        }
+        input, select, textarea {
+            background: #f8fafc;
+            color: #222 !important;
+        }
+        input::placeholder, textarea::placeholder {
+            color: #888 !important;
+            opacity: 1;
+        }
+        .btn, a.btn, .btn-success, .btn-secondary {
+            font-weight: bold;
+            border-radius: 8px;
+            transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover, a.btn:hover, .btn-success:hover, .btn-secondary:hover {
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 4px 16px rgba(48,139,180,0.18);
+        }
+    </style>
 @stop
 
 @section('js')
