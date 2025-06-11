@@ -339,6 +339,13 @@ return [
             'label_color' => 'success',
         ],
         [
+            'text' => 'Rocodromos',
+            'url' => 'rocodromos',
+            'icon' => 'fas fa-fw fa-map-marker-alt',
+            'label' => null,
+            'label_color' => 'success',
+        ],
+        [
             'text' => 'Ejercicios',
             'url' => 'ejercicios',
             'icon' => 'fas fa-fw fa-dumbbell',

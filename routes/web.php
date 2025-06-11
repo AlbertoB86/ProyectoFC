@@ -38,6 +38,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::post('/plan-ejercicios/actualizar-estado/{id}', [PlanEjerciciosController::class, 'actualizarEstado'])->name('planEjercicios.actualizar');
     Route::resource('ejercicios', EjercicioController::class);
     
+    //Rocodromos
+    Route::resource('rocodromos', App\Http\Controllers\RocodromoController::class);
 
     // Configuración de administrador
     Route::get('/admin/settings', function (){
