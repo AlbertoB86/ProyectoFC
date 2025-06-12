@@ -47,7 +47,7 @@
                                 No iniciado
                             @endif
                         </td>
-                        <td><a href="{{ route('planEntrenamiento.pdf') }}">Descargar PDF</a></td>
+                        <td><a href="{{ route('planEntrenamiento.pdf') }}"><i class="bi bi-file-earmark-pdf"></i></a></td>
                     </tr>
                 @endforeach
             </tbody>

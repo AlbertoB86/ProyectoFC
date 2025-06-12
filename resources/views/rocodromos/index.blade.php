@@ -206,7 +206,7 @@
         }
         #mapa-rocodromos {
             width: 100%;
-            height: 400px;
+            height: 500px;
             border-radius: 18px;
             margin-bottom: 2rem;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
