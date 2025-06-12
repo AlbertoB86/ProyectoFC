@@ -3,18 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Rocodromo;
 
 class RocodromoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Fetch all rocódromos from the database
-        $rocodromos = \App\Models\Rocodromo::all();
+        $query = Rocodromo::query();
 
-        // Return the view with the list of rocódromos
+        if ($request->filled('ciudad')) {
+            $query->where('ciudad', 'like', '%' . $request->ciudad . '%');
+        }
+        if ($request->filled('provincia')) {
+            $query->where('provincia', 'like', '%' . $request->provincia . '%');
+        }
+
+        $rocodromos = $query->get();
+
         return view('rocodromos.index', compact('rocodromos'));
     }
 
@@ -23,7 +31,7 @@ class RocodromoController extends Controller
      */
     public function create()
     {
-        //
+        return view('rocodromos.create');
     }
 
     /**
@@ -31,7 +39,28 @@ class RocodromoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the request data
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'direccion' => 'required|string|max:255',
+            'ciudad' => 'nullable|string|max:100',
+            'provincia' => 'nullable|string|max:100',
+            'telefono' => 'nullable|string|max:20',
+            'horario' => 'nullable|string|max:255',
+            'web' => 'nullable|string|max:255',
+        ]);
+
+        $rocodromo = new Rocodromo();
+        $rocodromo->nombre = $request->nombre;
+        $rocodromo->direccion = $request->direccion;
+        $rocodromo->ciudad = $request->ciudad;
+        $rocodromo->provincia = $request->provincia;
+        $rocodromo->telefono = $request->telefono;
+        $rocodromo->horario = $request->horario;
+        $rocodromo->web = $request->web;
+        $rocodromo->save();
+        
+        return redirect()->route('rocodromos.index')->with('success', 'Rocódromo creado exitosamente.');
     }
 
     /**
@@ -39,7 +68,8 @@ class RocodromoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $rocodromo = Rocodromo::all();
+        return view('rocodromos.show', compact('rocodromo'));
     }
 
     /**
@@ -47,7 +77,8 @@ class RocodromoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $rocodromo = Rocodromo::findOrFail($id);
+        return view('rocodromos.edit', compact('rocodromo'));
     }
 
     /**
@@ -55,7 +86,32 @@ class RocodromoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'direccion' => 'nullable|string|max:255',
+            'ciudad' => 'nullable|string|max:100',
+            'provincia' => 'nullable|string|max:100',
+            'telefono' => 'nullable|string|max:20',
+            'horario' => 'nullable|string|max:255',
+            'web' => 'nullable|string|max:255',
+            'latitud' => 'nullable|string|max:255',
+            'longitud' => 'nullable|string|max:255',
+            
+        ]);
+
+        $rocodromo = Rocodromo::findOrFail($id);
+        $rocodromo->nombre = $request->nombre;
+        $rocodromo->direccion = $request->direccion;
+        $rocodromo->ciudad = $request->ciudad;
+        $rocodromo->provincia = $request->provincia;
+        $rocodromo->telefono = $request->telefono;
+        $rocodromo->horario = $request->horario;
+        $rocodromo->web = $request->web;
+        $rocodromo->latitud = $request->latitud;
+        $rocodromo->longitud = $request->longitud;
+        $rocodromo->save();
+
+        return redirect()->route('rocodromos.index')->with('success', 'Rocódromo actualizado exitosamente.');
     }
 
     /**
@@ -63,6 +119,9 @@ class RocodromoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $rocodromo = Rocodromo::findOrFail($id);
+        $rocodromo->delete();
+
+        return redirect()->route('rocodromos.index')->with('success', 'Rocódromo eliminado exitosamente.');
     }
 }

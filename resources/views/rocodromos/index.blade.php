@@ -25,75 +25,119 @@
                 <a href="{{ route('rocodromos.create') }}" class="btn btn-success">Añadir Rocódromo</a>
             @endif
         </div>
-        <div class="row g-4 align-items-stretch">
-    <div class="col-lg-4 mb-4">
-        <div class="card">
-            <div class="card-header bg-primary text-white">
-                <i class="fas fa-map-marker-alt me-2"></i> Rocódromos Cercanos
-            </div>
-            <div class="card-body p-0">
-                <div id="mapa-rocodromos"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-8">
-        <div class="card h-100">
-            <div class="card-header bg-primary text-white">
-                <i class="fas fa-list me-2"></i> Lista de Rocódromos
-            </div>
-            <div class="card-body p-0 h-100">
-                <div class="table-responsive h-100">
-                    <table id="rocodromos" class="table w-100 mb-0" style="text-align: center;">
-                        <thead>
-                            <tr class="table-light">
-                                <th>Nombre</th>
-                                <th>Dirección</th>
-                                <th>Ciudad</th>
-                                <th>Provincia</th>
-                                <th>Teléfono</th>
-                                <th>Horario</th>
-                                <th>Web</th>
-                                @if(auth()->user()->rol == 'admin')
-                                    <th>Acciones</th>
-                                @endif
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($rocodromos as $rocodromo)
-                                <tr class="table-light">
-                                    <td>{{ $rocodromo->nombre }}</td>
-                                    <td>{{ $rocodromo->direccion }}</td>
-                                    <td>{{ $rocodromo->ciudad }}</td>
-                                    <td>{{ $rocodromo->provincia }}</td>
-                                    <td>{{ $rocodromo->telefono }}</td>
-                                    <td>{{ $rocodromo->horario }}</td>
-                                    <td>
-                                        @if($rocodromo->web)
-                                            <a href="{{ $rocodromo->web }}" target="_blank" title="Visitar web">
-                                                <i class="fas fa-globe fa-lg"></i>
-                                            </a>
-                                        @else
-                                            <span class="text-muted">No disponible</span>
-                                        @endif
-                                    </td>
-                                    @if(auth()->user()->rol == 'admin')
-                                        <td>
-                                            <a href="{{ route('rocodromos.edit', $rocodromo) }}" class="btn btn-primary">Editar</a>
-                                            <form action="{{ route('rocodromos.destroy', $rocodromo) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminarlo?');">Eliminar</button>
-                                            </form>
-                                        </td>
-                                    @endif
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+        <div class="row g-4 align-items-stretch">  
+            <div class="row g-4 align-items-stretch">
+                <!-- Mapa a la izquierda -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-map-marker-alt me-2"></i> Rocódromos Cercanos
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="mapa-rocodromos"></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
+                <!-- Contenido nuevo a la derecha -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-filter me-2"></i> Buscar y Filtrar Rocódromos
+                        </div>
+                        <div class="card-body">
+                            <!-- Filtros de búsqueda -->
+                            <form method="GET" action="{{ route('rocodromos.index') }}">
+                                <div class="mb-3">
+                                    <label for="ciudad" class="form-label">Ciudad</label>
+                                    <input type="text" name="ciudad" id="ciudad" class="form-control" placeholder="Buscar por ciudad" value="{{ request('ciudad') }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="provincia" class="form-label">Provincia</label>
+                                    <input type="text" name="provincia" id="provincia" class="form-control" placeholder="Buscar por provincia" value="{{ request('provincia') }}">
+                                </div>
+                                <button type="submit" class="btn btn-success w-25">Buscar</button>
+                                <a href="{{ route('rocodromos.index') }}" class="btn btn-secondary w-30">Limpiar Filtros</a>
+                            </form>
+                            <hr>
+                            <!-- Resumen rápido -->
+                            <h5 class="mt-3">Total rocódromos: <span class="badge bg-info">{{ $rocodromos->count() }}</span></h5>
+                            <ul class="list-group mt-3">
+                                @foreach($rocodromos->take(5) as $rocodromo)
+                                    <li class="list-group-item d-flex justify-content-start align-items-center">
+                                        {{ $rocodromo->nombre }}
+                                        @if($rocodromo->web)
+                                            <a href="{{ $rocodromo->web }}" target="_blank" title="Web"><i class="fas fa-globe"></i></a>                                            
+                                        @endif
+                                        @if($rocodromo->latitud && $rocodromo->longitud)
+                                            <a href="https://www.google.com/maps/dir/?api=1&destination={{ $rocodromo->latitud }},{{ $rocodromo->longitud }}" target="_blank" title="Cómo llegar">
+                                                <i class="fas fa-directions"></i>
+                                            </a>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>          
+            <div class="col-lg-12">
+                <div class="card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <i class="fas fa-list me-2"></i> Lista de Rocódromos
+                    </div>
+                    <div class="card-body p-0 h-100">
+                        <div class="table-responsive h-100">
+                            <table id="rocodromos" class="table w-100 mb-0" style="text-align: center;">
+                                <thead>
+                                    <tr class="table-light">
+                                        <th>Nombre</th>
+                                        <th>Dirección</th>
+                                        <th>Ciudad</th>
+                                        <th>Provincia</th>
+                                        <th>Teléfono</th>
+                                        <th>Horario</th>
+                                        <th>Web</th>
+                                        @if(auth()->user()->rol == 'admin')
+                                            <th>Acciones</th>
+                                        @endif
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($rocodromos as $rocodromo)
+                                        <tr class="table-light">
+                                            <td>{{ $rocodromo->nombre }}</td>
+                                            <td>{{ $rocodromo->direccion }}</td>
+                                            <td>{{ $rocodromo->ciudad }}</td>
+                                            <td>{{ $rocodromo->provincia }}</td>
+                                            <td>{{ $rocodromo->telefono }}</td>
+                                            <td>{{ $rocodromo->horario }}</td>
+                                            <td>
+                                                @if($rocodromo->web)
+                                                    <a href="{{ $rocodromo->web }}" target="_blank" title="Visitar web">
+                                                        <i class="fas fa-globe fa-lg"></i>
+                                                    </a>
+                                                @else
+                                                    <span class="text-muted">No disponible</span>
+                                                @endif
+                                            </td>
+                                            @if(auth()->user()->rol == 'admin')
+                                                <td>
+                                                    <a href="{{ route('rocodromos.edit', $rocodromo) }}" class="btn btn-primary">Editar</a>
+                                                    <form action="{{ route('rocodromos.destroy', $rocodromo) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminarlo?');">Eliminar</button>
+                                                    </form>
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>            
         </div>  
     @endif
 
@@ -211,9 +255,14 @@
         // Añade marcadores de rocódromos
         rocodromos.forEach(function(r) {
             if (r.latitud && r.longitud) {
+                let gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${r.latitud},${r.longitud}`;
+                let popupContent = `<b>${r.nombre}</b><br>${r.ciudad ?? ''}<br>
+                    <a href="${gmapsUrl}" target="_blank" class="btn btn-sm btn mt-2">
+                        Cómo llegar
+                    </a>`;
                 L.marker([parseFloat(r.latitud), parseFloat(r.longitud)])
                     .addTo(map)
-                    .bindPopup('<b>' + r.nombre + '</b><br>' + (r.ciudad ?? ''));
+                    .bindPopup(popupContent);
             }
         });
 
