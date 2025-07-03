@@ -7,9 +7,12 @@
 @stop
 
 @section('content')
-    <div class="container">
-        <form action="{{ route('ejercicios.store') }}" method="POST">
-            @csrf            
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card p-4" id="cajaAnimada" style="max-width: 500px; width: 100%;">
+        <h2 class="mb-4 text-center">Realizar Evaluación</h2>
+        <form action="{{ route('evaluaciones.store') }}" method="POST">
+            @csrf
+
             <div class="mb-3">
                 <label>Ejercicio:</label>
                 <input type="text" name="nombre" class="form-control" required>
@@ -65,12 +68,11 @@
             <button type="submit" class="btn btn-success">Guardar Ejercicio</button>
             <a href="{{ route('ejercicios.index') }}" class="btn btn-secondary">Cancelar</a>
         </form>
+        <hr style="border: 1px solid rgb(218, 188, 134); width: 100%; margin-top: 40px; margin-bottom: 15px;">
+        <p class="text-center text-body-secondary">© 2025 - Alberto Balaguer Toribio</p>
+        @include('components.cookies')
     </div>
-    <!-- Footer -->
-    <hr style="border: 1px solid rgba(11, 75, 112, 0.295); width: 100%; margin-top: 50px; margin-bottom: 25px;">
-    <p class="text-center text-body-secondary">© 2025 - Alberto Balaguer Toribio</p>
-    </div>
-    @include('components.cookies')
+</div>
 @stop
 
 @section('css')
@@ -80,20 +82,11 @@
             background: linear-gradient(120deg, #308bb4 0%, #1e3c72 100%) !important;
             min-height: 100vh;
         }
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-        }
-        form {
-            width: 100%;
-            max-width: 500px;
-            background-color: rgba(0,0,0,0.65);
-            color: #fff;
+        .card {
+            background-color: rgb(49, 87, 68) !important;
+            color: rgb(218, 188, 134);
             border-radius: 18px;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            padding: 2rem 2rem 1rem 2rem;
             opacity: 0;
             transform: translateY(40px) scale(0.98);
             animation: fadeInUp 1s ease forwards;
@@ -106,28 +99,32 @@
             }
         }
         label {
-            color: #fff;
+            color: rgb(218, 188, 134);
             font-weight: 500;
         }
-        input, select, textarea {
+        input, select {
             background: #f8fafc;
-            color: #222 !important;
+            color: #615f5f !important;
         }
-        input::placeholder, textarea::placeholder {
+        input::placeholder {
             color: #888 !important;
             opacity: 1;
         }
-        .btn, a.btn, .btn-success, .btn-secondary {
+        .btn-success {
             font-weight: bold;
             border-radius: 8px;
             transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(67, 240, 78, 0.15);
         }
-        .btn:hover, a.btn:hover, .btn-success:hover, .btn-secondary:hover {
+        .btn-success:hover {
+            background: #4888a5;
+            color: #fff;
             transform: translateY(-2px) scale(1.04);
             box-shadow: 0 4px 16px rgba(48,139,180,0.18);
         }
     </style>
 @stop
+
 
 @section('js')
     <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>

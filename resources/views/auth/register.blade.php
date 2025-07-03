@@ -1,20 +1,20 @@
 <x-guest-layout>
     <style>
         body {
-            background: linear-gradient(120deg, #308bb4 0%, #1e3c72 100%);
+            background: linear-gradient(120deg, rgb(49, 87, 68) 0%, rgb(17, 43, 30) 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .caja {
-            background-color: linear-gradient(120deg, #308bb4 0%, #1e3c72 100%);
+            background-color: linear-gradient(120deg, rgb(49, 87, 68) 0%, rgb(17, 43, 30) 100%);
             padding: 2.5rem 2rem;
             border-radius: 18px;
             text-align: center;
             color: white;
-            max-width: 700px;
-            margin: 2rem auto;
+            max-width: 400px;
+            margin: 2rem auto;            
             opacity: 0;
             transform: translateY(40px) scale(0.98);
             animation: fadeInUp 1s ease forwards;
@@ -31,8 +31,8 @@
             transition: opacity 0.5s, transform 0.5s;
         }
         .btn-register {
-            background-color: #308bb4;
-            color: white;
+            background-color: rgb(49, 87, 68);
+            color: rgb(218, 188, 134);
             padding: 12px 28px;
             font-weight: bold;
             border-radius: 4px;
@@ -44,19 +44,19 @@
             box-shadow: 0 2px 8px rgba(48,139,180,0.10);
         }
         .btn-register:hover {
-            background: #4888a5;
-            color: #fff;
+            background: rgb(218, 188, 134);
+            color: rgb(49, 87, 68);
             transform: translateY(-2px) scale(1.04);
             box-shadow: 0 4px 16px rgba(48,139,180,0.18);
         }
         .text-gray-600, .text-sm {
-            color: #fff !important;
+            color: rgb(218, 188, 134) !important;
         }
         label, .text-gray-600 {
-            color: #fff !important;
+            color:rgb(218, 188, 134) !important;
         }
-        input, select {
-            background: #f8fafc;
+        input {
+            background: rgb(218, 188, 134);            
             color: #222 !important;
         }
     </style>

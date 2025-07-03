@@ -72,9 +72,9 @@
                 </select>
             </div>        
 
-            <button type="submit" class="btn btn-success w-100 mt-3">Guardar Evaluación</button>
+            <button type="submit" class="btn w-100 mt-3" style="background-color:rgb(218, 188, 134); color:rgb(49, 87, 68)">Guardar Evaluación</button>
         </form>
-        <hr style="border: 1px solid rgb(11, 75, 112); width: 100%; margin-top: 40px; margin-bottom: 15px;">
+        <hr style="border: 1px solid rgb(218, 188, 134); width: 100%; margin-top: 40px; margin-bottom: 15px;">
         <p class="text-center text-body-secondary">© 2025 - Alberto Balaguer Toribio</p>
         @include('components.cookies')
     </div>
@@ -89,8 +89,8 @@
             min-height: 100vh;
         }
         .card {
-            background-color: rgba(77, 74, 74, 0.65) !important;
-            color: #fff;
+            background-color: rgb(49, 87, 68) !important;
+            color: rgb(218, 188, 134);
             border-radius: 18px;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
             opacity: 0;
@@ -105,7 +105,7 @@
             }
         }
         label {
-            color: #fff;
+            color: rgb(218, 188, 134);
             font-weight: 500;
         }
         input, select {

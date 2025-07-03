@@ -23,7 +23,7 @@
     <div class="row g-4">
         <!-- Columna lateral -->
         <div class="col-lg-3 col-md-4">
-            <div class="info-box mb-3 shadow rounded-3" style="background-color: rgba(241, 118, 29, 0.678)">
+            <div class="info-box mb-3 shadow rounded-3" style="background-color: rgb(49, 87, 68); color: rgb(218, 188, 134)">
                 <span class="info-box-icon"><i class="fas fa-mountain"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Nivel Actual</span>
@@ -36,7 +36,7 @@
                     </span>
                 </div>
             </div>
-            <div class="info-box mb-3 shadow rounded-3" style="background-color:rgba(67, 240, 78, 0.671)">
+            <div class="info-box mb-3 shadow rounded-3" style="background-color:rgb(49, 87, 68); color: rgb(218, 188, 134)">
                 <span class="info-box-icon"><i class="fas fa-calendar-alt"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Última Evaluación</span>
@@ -50,11 +50,11 @@
                 </div>
             </div>
             <div class="card mb-3 shadow-sm">
-                <a href="{{ route('evaluaciones.create') }}" class="btn btn-primary w-100">Nueva Evaluación</a>
+                <a href="{{ route('evaluaciones.create') }}" class="btn w-100" style="background-color:rgb(108, 188, 140); color:rgb(49, 87, 68)">Nueva Evaluación</a>
             </div>
             @if(auth()->user()->rol == 'admin')
                 <div class="card mb-3 shadow-sm">
-                    <a href="{{ route('ejercicios.index') }}" class="btn btn-info w-100 text-white">Ejercicios</a>
+                    <a href="{{ route('ejercicios.index') }}" class="btn w-100" style="background-color:rgb(108, 188, 140); color:rgb(49, 87, 68)">Ejercicios</a>
                 </div>
             @endif
         </div>
@@ -88,14 +88,14 @@
         <hr class="my-4">
 
         @if(!$planEntrenamiento || !$planEntrenamiento->iniciado)
-            <div class="alert alert-info text-center shadow-sm">
+            <div class="alert alert-info text-center shadow-sm" style="background-color:rgb(108, 188, 140); color:rgb(49, 87, 68)">
                 @if(auth()->user()->planes_completados >= 2)
                     Has completado dos planes de entrenamiento. Es hora de realizar una nueva evaluación.
                     <a href="{{ route('evaluaciones.create') }}" class="btn btn-primary ms-2">Realizar Evaluación</a>
                 @elseif($evaluaciones->count() > 0)
                     <form method="POST" action="{{ route('planEntrenamiento.generar') }}" class="d-inline">
                         @csrf
-                        <button class="btn btn-success">Comienza a Entrenar</button>
+                        <button class="btn" style="background-color: rgb(49, 87, 68); color: rgb(218, 188, 134)">Comienza a Entrenar</button>
                     </form>
                 @else
                     Debes realizar una evaluación primero para comenzar un entrenamiento.
@@ -105,7 +105,7 @@
 
         @if($planEntrenamiento && $planEntrenamiento->iniciado)
             <div class="card shadow rounded-4 mb-4 w-100">
-                <div class="card-header bg-gradient bg-primary text-white d-flex align-items-center justify-content-between">
+                <div class="card-header bg-gradient bg text-white d-flex align-items-center justify-content-between" style="background-color:rgb(49, 87, 68); color: rgb(218, 188, 134);">
                     <div class="flex-grow-1 d-flex justify-content-start">
                         @if($dia > 1)
                             <a href="{{ route('dashboard', ['dia' => (int)$dia - 1]) }}" class="btn btn-sm btn-outline-light">&larr;</a>
@@ -146,21 +146,21 @@
                                             </td>
                                             <td>
                                                 @if($calentamiento->ejercicio->series)
-                                                    <span class="badge bg-primary">{{ $calentamiento->ejercicio->series }}</span>
+                                                    <span class="badge" class="badge" style="background-color:rgb(108, 188, 140); color: rgb(49, 87, 68)">{{ $calentamiento->ejercicio->series }}</span>
                                                 @else
                                                     <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 @if($calentamiento->ejercicio->repeticiones)
-                                                    <span class="badge bg-primary">{{ $calentamiento->ejercicio->repeticiones }}</span>
+                                                    <span class="badge" class="badge" style="background-color:rgb(108, 188, 140); color: rgb(49, 87, 68)">{{ $calentamiento->ejercicio->repeticiones }}</span>
                                                 @else
                                                     <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 @if($calentamiento->ejercicio->duracion)
-                                                    <span class="badge bg-info">{{ $calentamiento->ejercicio->id < 4 ? $calentamiento->ejercicio->duracion . ' Min.' : $calentamiento->ejercicio->duracion . ' Seg.' }}</span>
+                                                    <span class="badge" class="badge" style="background-color:rgb(108, 188, 140); color: rgb(49, 87, 68)">{{ $calentamiento->ejercicio->id < 4 ? $calentamiento->ejercicio->duracion . ' Min.' : $calentamiento->ejercicio->duracion . ' Seg.' }}</span>
                                                 @else
                                                     <span class="badge bg-secondary">-</span>
                                                 @endif
@@ -194,21 +194,21 @@
                                             </td>
                                             <td>
                                                 @if($ejercicio->ejercicio->series)
-                                                    <span class="badge bg-primary">{{ $ejercicio->ejercicio->series }}</span>
+                                                   <span class="badge" class="badge" style="background-color:rgb(108, 188, 140); color: rgb(49, 87, 68)">{{ $ejercicio->ejercicio->series }}</span>
                                                 @else
                                                     <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 @if($ejercicio->ejercicio->repeticiones)
-                                                    <span class="badge bg-primary">{{ $ejercicio->ejercicio->repeticiones }}</span>
+                                                    <span class="badge" class="badge" style="background-color:rgb(108, 188, 140); color: rgb(49, 87, 68)">{{ $ejercicio->ejercicio->repeticiones }}</span>
                                                 @else
                                                     <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 @if($ejercicio->ejercicio->duracion)
-                                                    <span class="badge bg-info">{{ $ejercicio->ejercicio->id <= 4 ? $ejercicio->ejercicio->duracion . ' Min.' : $ejercicio->ejercicio->duracion . ' Seg.' }}</span>
+                                                    <span class="badge" class="badge" style="background-color:rgb(108, 188, 140); color: rgb(49, 87, 68)">{{ $ejercicio->ejercicio->id <= 4 ? $ejercicio->ejercicio->duracion . ' Min.' : $ejercicio->ejercicio->duracion . ' Seg.' }}</span>
                                                 @else
                                                     <span class="badge bg-secondary">-</span>
                                                 @endif
@@ -242,21 +242,21 @@
                                             </td>
                                             <td>
                                                 @if($estiramiento->ejercicio->series)
-                                                    <span class="badge bg-primary">{{ $estiramiento->ejercicio->series }}</span>
+                                                    <span class="badge" class="badge" style="background-color:rgb(108, 188, 140); color: rgb(49, 87, 68)">{{ $estiramiento->ejercicio->series }}</span>
                                                 @else
                                                     <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 @if($estiramiento->ejercicio->repeticiones)
-                                                    <span class="badge bg-primary">{{ $estiramiento->ejercicio->repeticiones }}</span>
+                                                    <span class="badge" class="badge" style="background-color:rgb(108, 188, 140); color: rgb(49, 87, 68)">{{ $estiramiento->ejercicio->repeticiones }}</span>
                                                 @else
                                                     <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 @if($estiramiento->ejercicio->duracion)
-                                                    <span class="badge bg-info">{{ $estiramiento->ejercicio->duracion }} Seg.</span>
+                                                    <span class="badge" class="badge" style="background-color:rgb(108, 188, 140); color: rgb(49, 87, 68)">{{ $estiramiento->ejercicio->duracion }} Seg.</span>
                                                 @else
                                                     <span class="badge bg-secondary">-</span>
                                                 @endif

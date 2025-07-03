@@ -42,7 +42,7 @@
                 @error('password_confirmation') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
 
-            <button type="submit" class="btn btn-info" style="margin: 10px">Guardar</button>
+            <button type="submit" class="btn" style="margin: 10px; background-color:rgb(49, 87, 68); color: rgb(218, 188, 134);">Guardar</button>
         </form>
     @endif
     <hr style="border: 1px solid rgba(11, 75, 112, 0.295); width: 100%; margin-top: 50px; margin-bottom: 25px;">

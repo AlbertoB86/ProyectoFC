@@ -19,7 +19,7 @@
         </div>
     @endif
 
-    <a href="{{ route('ejercicios.create') }}" class="btn" style="background-color: rgb(51, 125, 148); color:blanchedalmond; margin-top:5px">Añadir  Ejercicio</a>
+    <a href="{{ route('ejercicios.create') }}" class="btn" style="background-color:rgb(108, 188, 140); color:rgb(49, 87, 68)">Añadir  Ejercicio</a>
 
     <table id="ejercicios" class="table is-striped" style="width:100%; ; margin-bottom: 20px;">
         <thead>
@@ -41,7 +41,7 @@
                 <td>{{ $ejercicio->descripcion }}</td>
                 <td>{{ $ejercicio->nivel }}</td>
                 <td>
-                    <a href="{{ route('ejercicios.edit', $ejercicio) }}" class="btn" style="background-color: rgb(51, 125, 148); color:blanchedalmond">Editar</a>
+                    <a href="{{ route('ejercicios.edit', $ejercicio) }}" class="btn" style="background-color: rgb(108, 188, 140); color:rgb(49, 87, 68)">Editar</a>
                     <form action="{{ route('ejercicios.destroy', $ejercicio) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
@@ -64,7 +64,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
     <style>
         body {
-            background: linear-gradient(120deg, #308bb4 0%, #1e3c72 100%) !important;
+            background: linear-gradient(120deg, rgb(108, 188, 140) 0%, #1e3c72 100%) !important;
             min-height: 100vh;
         }
         .card, .info-box, .modal-content, .table, .alert, .btn {

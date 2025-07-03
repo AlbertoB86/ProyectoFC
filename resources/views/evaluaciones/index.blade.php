@@ -19,7 +19,7 @@
         </div>
     @endif
 
-    <a href="{{ route('evaluaciones.create') }}" class="btn" style="background-color: rgb(51, 125, 148); color:blanchedalmond">Realizar Nueva Evaluación</a>
+    <a href="{{ route('evaluaciones.create') }}" class="btn" style="background-color:rgb(108, 188, 140); color:rgb(49, 87, 68)">Realizar Nueva Evaluación</a>
     @if($evaluaciones->isEmpty())
         <p style="margin: 10px">No tienes ninguna evaluación registrada</p>
     @else

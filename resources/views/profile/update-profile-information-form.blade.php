@@ -1,5 +1,5 @@
 <div class="card mb-4">
-    <div class="card-header bg-info text-white">
+    <div class="card-header" style="background-color:rgb(49, 87, 68); color: rgb(218, 188, 134);">
         Actualizar información de perfil
     </div>
     <div class="card-body">
@@ -44,7 +44,7 @@
                 <x-input id="email" type="email" class="form-control mt-1" wire:model="state.email" required autocomplete="username" />
                 <x-input-error for="email" class="mt-2" />
             </div>
-            <button class="btn btn-info" style="margin: 10px">{{ __('Guardar') }}</button>
+            <button class="btn btn-info" style="margin: 10px; background-color:rgb(49, 87, 68); color: rgb(218, 188, 134);">{{ __('Guardar') }}</button>
         </form>
     </div>
 </div>

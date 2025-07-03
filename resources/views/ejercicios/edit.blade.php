@@ -7,17 +7,18 @@
 @stop
 
 @section('content')
-    <div class="container">
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card p-4" style="max-width: 500px; width: 100%;">
         <form action="{{ route('ejercicios.update', $ejercicio) }}" method="POST">
             @csrf
             @method('PUT')
-            
+
             <div class="mb-3">
                 <label>Ejercicio:</label>
                 <input type="text" name="nombre" class="form-control" value="{{ $ejercicio->nombre }}" required>
             </div>
 
-            <div class="mb-3">      
+            <div class="mb-3">
                 <label>Descripción:</label>
                 <textarea name="descripcion" class="form-control" required>{{ $ejercicio->descripcion }}</textarea>
             </div>
@@ -32,7 +33,7 @@
                     <option value="Core" {{ $ejercicio->tipo == 'Core' ? 'selected' : '' }}>Core</option>
                     <option value="Técnica" {{ $ejercicio->tipo == 'Técnica' ? 'selected' : '' }}>Técnica</option>
                 </select>
-            </div>         
+            </div>
 
             <div class="mb-3">
                 <label>Nivel:</label>
@@ -57,24 +58,23 @@
             <div class="mb-3">
                 <label>Duración (min):</label>
                 <input type="number" name="duracion" class="form-control" value="{{ $ejercicio->duracion }}">
-            </div>  
+            </div>
 
             <div class="mb-3">
                 <label>Descanso (min):</label>
                 <input type="number" name="descanso" class="form-control" value="{{ $ejercicio->descanso }}">
             </div>
-            
-            <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Actualizar Ejercicio</button>
-                <a href="{{ route('ejercicios.index') }}" class="btn btn-secondary">Cancelar</a>
+
+            <div class="mb-3 d-flex gap-2">
+                <button type="submit" class="btn btn-success w-100">Actualizar Ejercicio</button>
+                <a href="{{ route('ejercicios.index') }}" class="btn btn-secondary w-100">Cancelar</a>
             </div>
-        </form>        
-    </div> 
-    <!-- Footer -->
-    <hr style="border: 1px solid rgba(11, 75, 112, 0.295); width: 100%; margin-top: 50px; margin-bottom: 25px;">
-    <p class="text-center text-body-secondary">© 2025 - Alberto Balaguer Toribio</p>
+        </form>
+        <hr style="border: 1px solid rgb(218, 188, 134); width: 100%; margin-top: 40px; margin-bottom: 15px;">
+        <p class="text-center text-body-secondary">© 2025 - Alberto Balaguer Toribio</p>
+        @include('components.cookies')
     </div>
-    @include('components.cookies')
+</div>
 @stop
 
 @section('css')
@@ -84,20 +84,11 @@
             background: linear-gradient(120deg, #308bb4 0%, #1e3c72 100%) !important;
             min-height: 100vh;
         }
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-        }
-        form {
-            width: 100%;
-            max-width: 500px;
-            background-color: rgba(0,0,0,0.65);
-            color: #fff;
+        .card {
+            background-color: rgb(49, 87, 68) !important;
+            color: rgb(218, 188, 134);
             border-radius: 18px;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            padding: 2rem 2rem 1rem 2rem;
             opacity: 0;
             transform: translateY(40px) scale(0.98);
             animation: fadeInUp 1s ease forwards;
@@ -110,25 +101,37 @@
             }
         }
         label {
-            color: #fff;
+            color: rgb(218, 188, 134);
             font-weight: 500;
         }
         input, select, textarea {
             background: #f8fafc;
-            color: #222 !important;
+            color: #615f5f !important;
         }
         input::placeholder, textarea::placeholder {
             color: #888 !important;
             opacity: 1;
         }
-        .btn, a.btn, .btn-success, .btn-secondary {
+        .btn-success {
             font-weight: bold;
             border-radius: 8px;
             transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(67, 240, 78, 0.15);
         }
-        .btn:hover, a.btn:hover, .btn-success:hover, .btn-secondary:hover {
+        .btn-success:hover {
+            background: #4888a5;
+            color: #fff;
             transform: translateY(-2px) scale(1.04);
             box-shadow: 0 4px 16px rgba(48,139,180,0.18);
+        }
+        .btn-secondary {
+            background: #e0eafc;
+            color: #1e3c72;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background: #b6d0ee;
+            color: #1e3c72;
         }
     </style>
 @stop

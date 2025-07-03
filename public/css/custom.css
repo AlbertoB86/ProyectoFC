@@ -1,0 +1,50 @@
+/* Fondo oscuro para el sidebar */
+.main-sidebar {
+    background-color: rgb(49, 87, 68) !important;
+}
+
+.nav-sidebar .nav-header {
+    color: rgba(218, 188, 134, 0.8);
+}
+
+/* Color de los enlaces del sidebar */
+.nav-sidebar .nav-link {
+    color: rgb(218, 188, 134) !important;
+}
+
+/* Hover */
+.nav-sidebar .nav-link:hover {
+    background-color: #3c4b64;
+    color: #ffc107;
+}
+
+/* Iconos del menú */
+.nav-sidebar .nav-icon {
+    color: rgb(216, 189, 132);
+}
+
+/* Cambiar color de fondo del ítem activo */
+.nav-sidebar .nav-item > .nav-link.active {
+    background-color: rgb(108, 188, 140) !important; /* Cambia a tu color */
+    color: #ffffff !important;
+}
+
+/* Cambiar color del icono del ítem activo */
+.nav-sidebar .nav-item > .nav-link.active i {
+    color: #fff !important;
+}
+
+/* Color de fondo de la barra superior */
+.main-header.navbar {
+    background-color: rgb(49, 87, 68) !important;
+}
+
+/* Color del texto e iconos en la navbar */
+.main-header .nav-link,
+.main-header .navbar-brand {
+    color: rgb(218, 188, 134) !important;
+}
+
+.main-header .nav-link:hover {
+    color: #ffc107 !important;
+}

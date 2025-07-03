@@ -47,7 +47,7 @@
                                 No iniciado
                             @endif
                         </td>
-                        <td><a href="{{ route('planEntrenamiento.pdf') }}"><i class="bi bi-file-earmark-pdf"></i></a></td>
+                        <td><a href="{{ route('planEntrenamiento.pdf') }}" target="_blank" download><i class="bi bi-file-earmark-pdf" style="font-size: 2rem; color: green"></i></a></td>
                     </tr>
                 @endforeach
             </tbody>
@@ -64,6 +64,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/admin_custom.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         body {
             background: linear-gradient(120deg, #308bb4 0%, #1e3c72 100%) !important;

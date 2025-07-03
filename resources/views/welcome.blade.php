@@ -8,7 +8,7 @@
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(120deg, #308bb4 0%, #1e3c72 100%);
+            background: linear-gradient(120deg, rgb(49, 87, 68) 0%, rgb(17, 43, 30) 100%);
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -21,7 +21,7 @@
             padding: 3rem 2.5rem;
             border-radius: 18px;
             text-align: center;
-            color: white;
+            color: rgb(218, 188, 134);
             max-width: 500px;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
             /* Animación de entrada */
@@ -58,23 +58,23 @@
             box-shadow: 0 2px 8px rgba(48,139,180,0.10);
         }
         .btn-login {
-            background-color: #308bb4;
-            color: white;
+            background-color: rgb(49, 87, 68);
+            color: rgb(218, 188, 134);
         }
         .btn-login:hover {
-            background: #4888a5;
-            color: #fff;
+            background: rgb(218, 188, 134);
+            color: rgb(49, 87, 68);
             transform: translateY(-2px) scale(1.04);
             box-shadow: 0 4px 16px rgba(48,139,180,0.18);
         }
         .btn-register {
             background: transparent;
-            color: white;
+            color: rgb(218, 188, 134);
             border: 1.5px solid white;
         }
         .btn-register:hover {
-            background: white;
-            color: #308bb4;
+            background: rgb(108, 188, 140);
+            color: rgb(218, 188, 134);
             transform: translateY(-2px) scale(1.04);
             box-shadow: 0 4px 16px rgba(48,139,180,0.18);
         }
