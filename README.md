@@ -45,7 +45,7 @@ Aplicación web para la planificación de entrenamientos personalizados de escal
 
 🖼️ Capturas de pantalla
 ![Login](login.png)
-![Pantalla principal](docs/screenshots/dashboard.png)
-![Pantalla ejercicios](docs/screenshots/ejercicios.png)
-![Pantalla rocodromos](docs/screenshots/rocodromos.png)
+![Pantalla principal](dashboard.png)
+![Pantalla ejercicios](ejercicios.png)
+![Pantalla rocodromos](rocodromos.png)
 
