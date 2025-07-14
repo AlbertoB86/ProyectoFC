@@ -57,3 +57,7 @@ Aplicación web para la planificación de entrenamientos personalizados de escal
         <img src="rocodromos.png" alt="Pantalla Rocodromos" width="60%">
     </p>
 
+--------------------------------------
+## 📄 Licencia
+
+Este proyecto está publicado bajo la licencia MIT. Puedes consultarla en el archivo LICENSE.
