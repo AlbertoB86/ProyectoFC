@@ -44,16 +44,16 @@ Aplicación web para la planificación de entrenamientos personalizados de escal
 - DomPDF (PDF)
 
 🖼️ Capturas de pantalla
-    <p align="center">
+    <p>
       <img src="login.png" alt="Login" width="60%">
     </p>
-    <p align="center">
+    <p>
         <img src="dashboard.png" alt="Pantalla Principal" width="60%">
     </p>
-    <p align="center">
+    <p>
         <img src="ejercicios.png" alt="Pantalla Ejercicios" width="60%">
     </p>
-    <p align="center">
+    <p>
         <img src="rocodromos.png" alt="Pantalla Rocodromos" width="60%">
     </p>
 
